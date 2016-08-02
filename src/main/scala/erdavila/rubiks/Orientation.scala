@@ -4,7 +4,7 @@ object Orientation {
   private val clockwiseValues = Array(North, East, South, West)
 }
 
-abstract class Orientation {
+sealed abstract class Orientation {
   private lazy val index = Orientation.clockwiseValues.indexOf(this)
 
   lazy val clockwise        = Orientation.clockwiseValues((index + 1) % 4)
@@ -17,7 +17,7 @@ abstract class Orientation {
   }
 }
 
-object North extends Orientation
-object East  extends Orientation
-object South extends Orientation
-object West  extends Orientation
+case object North extends Orientation
+case object East  extends Orientation
+case object South extends Orientation
+case object West  extends Orientation

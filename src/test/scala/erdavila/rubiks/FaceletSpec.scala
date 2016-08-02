@@ -4,14 +4,11 @@ class FaceletSpec extends UnitSpec {
   describe("Facelet") {
     describe(".rotated()") {
       it("returns a new Facelet with rotated orientation") {
-        val orientation = stub[Orientation]
-        val rotatedOrientation = mock[Orientation]
-        (orientation.rotated _).when(Clockwise).returns(rotatedOrientation)
-        val facelet = Facelet(7, Yellow, orientation)
+        val facelet = Facelet(7, Yellow, North)
 
         val rotatedFacelet = facelet.rotated(Clockwise)
 
-        rotatedFacelet should equal (Facelet(7, Yellow, rotatedOrientation))
+        rotatedFacelet should equal (Facelet(7, Yellow, East))
       }
     }
   }

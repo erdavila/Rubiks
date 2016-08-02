@@ -1,6 +1,6 @@
 package erdavila.rubiks
 
-abstract class Rotation
+sealed abstract class Rotation
 
-object Clockwise extends Rotation
-object CounterClockwise extends Rotation
+case object Clockwise extends Rotation
+case object CounterClockwise extends Rotation
