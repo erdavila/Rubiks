@@ -11,6 +11,7 @@ class Face(firstId: Int, val size: Int, color: Color) {
     val sourcePositionFor = rotation match {
       case Clockwise        => { (destRow: Int, destColumn: Int) => (size - 1 - destColumn, destRow) }
       case CounterClockwise => { (destRow: Int, destColumn: Int) => (destColumn, size - 1 - destRow) }
+      case Flipped          => { (destRow: Int, destColumn: Int) => (size - 1 - destRow, size - 1 - destColumn) }
     }
 
     Array.tabulate(size, size) {

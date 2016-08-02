@@ -14,6 +14,7 @@ sealed abstract class Orientation {
   def rotated(rotation: Rotation) = rotation match {
     case Clockwise        => clockwise
     case CounterClockwise => counterClockwise
+    case Flipped          => opposite
   }
 }
 

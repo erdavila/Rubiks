@@ -8,6 +8,7 @@ class OrientationSpec extends UnitSpec {
       North.opposite         should be (South)
       North.rotated(Clockwise)        should be (East)
       North.rotated(CounterClockwise) should be (West)
+      North.rotated(Flipped)          should be (South)
     }
   }
 
@@ -18,6 +19,7 @@ class OrientationSpec extends UnitSpec {
       East.opposite         should be (West)
       East.rotated(Clockwise)        should be (South)
       East.rotated(CounterClockwise) should be (North)
+      East.rotated(Flipped)          should be (West)
     }
   }
 
@@ -28,6 +30,7 @@ class OrientationSpec extends UnitSpec {
       South.opposite         should be (North)
       South.rotated(Clockwise)        should be (West)
       South.rotated(CounterClockwise) should be (East)
+      South.rotated(Flipped)          should be (North)
     }
   }
 
@@ -38,6 +41,7 @@ class OrientationSpec extends UnitSpec {
       West.opposite         should be (East)
       West.rotated(Clockwise)        should be (North)
       West.rotated(CounterClockwise) should be (South)
+      West.rotated(Flipped)          should be (East)
     }
   }
 }

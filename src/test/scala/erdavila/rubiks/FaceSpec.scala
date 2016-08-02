@@ -49,6 +49,18 @@ class FaceSpec extends UnitSpec {
               Seq(( 7, Yellow, West), (10, Yellow, West), (13, Yellow, West))))
         }
       }
+
+      describe("Flip") {
+        it("rotates the facelets") {
+          face.rotate(Flipped)
+
+          face.facelets should equal (
+            facelets(
+              Seq((15, Yellow, South), (14, Yellow, South), (13, Yellow, South)),
+              Seq((12, Yellow, South), (11, Yellow, South), (10, Yellow, South)),
+              Seq(( 9, Yellow, South), ( 8, Yellow, South), ( 7, Yellow, South))))
+        }
+      }
     }
   }
 }
