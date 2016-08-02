@@ -1,5 +1,6 @@
 package erdavila.rubiks
 
+import org.scalamock.scalatest.MockFactory
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.FunSpec
 import org.scalatest.Matchers
@@ -10,3 +11,4 @@ abstract class UnitSpec
   with OneInstancePerTest
   with BeforeAndAfterEach
   with Matchers
+  with MockFactory
