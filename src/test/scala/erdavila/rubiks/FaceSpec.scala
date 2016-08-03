@@ -62,5 +62,49 @@ class FaceSpec extends UnitSpec {
         }
       }
     }
+
+    describe(".Stripes") {
+      describe(".apply()") {
+        val face = new Face(7, 3, Yellow)
+
+        describe("North") {
+          it("returns a stripe with the facelets correctly rotated") {
+            val stripe = face.stripes(fromEdge = North, offset = 0)
+
+            stripe should equal(
+              facelets(Seq(( 7, Yellow, North), ( 8, Yellow, North), ( 9, Yellow, North))).head)
+          }
+        }
+
+        describe("East") {
+          it("returns a stripe with the facelets correctly rotated") {
+            val stripe = face.stripes(fromEdge = East, offset = 0)
+
+            stripe should equal(
+              facelets(Seq(( 9, Yellow, West), (12, Yellow, West), (15, Yellow, West))).head)
+          }
+        }
+
+        describe("South") {
+          it("returns a stripe with the facelets correctly rotated") {
+            val stripe = face.stripes(fromEdge = South, offset = 1)
+
+            stripe should equal(
+              facelets(
+                Seq((12, Yellow, South), (11, Yellow, South), (10, Yellow, South))).head)
+          }
+        }
+
+        describe("West") {
+          it("returns a stripe with the facelets correctly rotated") {
+            val stripe = face.stripes(fromEdge = West, offset = 2)
+
+            stripe should equal(
+              facelets(
+                Seq((15, Yellow, East), (12, Yellow, East), ( 9, Yellow, East))).head)
+          }
+        }
+      }
+    }
   }
 }
