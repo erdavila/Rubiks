@@ -13,6 +13,17 @@ class Face(firstId: Int, val size: Int, color: Color) {
         facelet.rotated(rotation)
       }
     }
+
+    def update(fromEdge: Orientation, offset: Int = 0, facelets: Seq[Facelet]): Unit = {
+      val rotation = fromEdge - North
+      val mapSourceFromDestinationReversed = srcFromDestMapping(rotation)
+      val mapDestinationFromIndexReversed = { index: Int => mapSourceFromDestinationReversed(index, offset) }
+
+      (0 until size) foreach { index =>
+        val (dstColumn, dstRow) = mapDestinationFromIndexReversed(index)
+        Face.this.facelets(dstRow)(dstColumn) = facelets(index).rotated(rotation)
+      }
+    }
   }
 
   val facelets = Array.tabulate(size, size) {

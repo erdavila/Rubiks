@@ -64,9 +64,9 @@ class FaceSpec extends UnitSpec {
     }
 
     describe(".Stripes") {
-      describe(".apply()") {
-        val face = new Face(7, 3, Yellow)
+      val face = new Face(7, 3, Yellow)
 
+      describe(".apply()") {
         describe("North") {
           it("returns a stripe with the facelets correctly rotated") {
             val stripe = face.stripes(fromEdge = North, offset = 0)
@@ -102,6 +102,58 @@ class FaceSpec extends UnitSpec {
             stripe should equal(
               facelets(
                 Seq((15, Yellow, East), (12, Yellow, East), ( 9, Yellow, East))).head)
+          }
+        }
+      }
+
+      describe(".update()") {
+        val srcFacelets = Array(Facelet(20, Red, East), Facelet(21, Blue, South), Facelet(22, Orange, West))
+
+        describe("North") {
+          it("sets a stripe") {
+            face.stripes(North, 0) = srcFacelets
+
+            face.facelets should equal (
+              facelets(
+                Seq((20, Red   , East ), (21, Blue  , South), (22, Orange, West )),
+                Seq((10, Yellow, North), (11, Yellow, North), (12, Yellow, North)),
+                Seq((13, Yellow, North), (14, Yellow, North), (15, Yellow, North))))
+          }
+        }
+
+        describe("East") {
+          it("sets a stripe") {
+            face.stripes(East, 0) = srcFacelets
+
+            face.facelets should equal (
+              facelets(
+                Seq(( 7, Yellow, North), ( 8, Yellow, North), (20, Red   , South)),
+                Seq((10, Yellow, North), (11, Yellow, North), (21, Blue  , West )),
+                Seq((13, Yellow, North), (14, Yellow, North), (22, Orange, North))))
+          }
+        }
+
+        describe("South") {
+          it("sets a stripe") {
+            face.stripes(South, 1) = srcFacelets
+
+            face.facelets should equal (
+              facelets(
+                Seq(( 7, Yellow, North), ( 8, Yellow, North), ( 9, Yellow, North)),
+                Seq((22, Orange, East ), (21, Blue  , North), (20, Red   , West )),
+                Seq((13, Yellow, North), (14, Yellow, North), (15, Yellow, North))))
+          }
+        }
+
+        describe("West") {
+          it("sets a stripe") {
+            face.stripes(West, 2) = srcFacelets
+
+            face.facelets should equal (
+              facelets(
+                Seq(( 7, Yellow, North), ( 8, Yellow, North), (22, Orange, South)),
+                Seq((10, Yellow, North), (11, Yellow, North), (21, Blue  , East )),
+                Seq((13, Yellow, North), (14, Yellow, North), (20, Red   , North))))
           }
         }
       }
