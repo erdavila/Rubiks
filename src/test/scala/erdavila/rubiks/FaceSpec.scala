@@ -15,11 +15,25 @@ class FaceSpec extends UnitSpec {
       it("initializes the facelets with sequential ids and the passed color and orientation") {
         val face = new Face(7, 3, Yellow)
 
-        face.facelets should equal (
+        face.facelets should contain theSameElementsInOrderAs
           facelets(
             Seq(( 7, Yellow, North), ( 8, Yellow, North), ( 9, Yellow, North)),
             Seq((10, Yellow, North), (11, Yellow, North), (12, Yellow, North)),
-            Seq((13, Yellow, North), (14, Yellow, North), (15, Yellow, North))))
+            Seq((13, Yellow, North), (14, Yellow, North), (15, Yellow, North)))
+      }
+    }
+
+    describe(".facelets") {
+      val face = new Face(7, 3, Yellow)
+
+      it("can not have structure changed") {
+        "face.facelets(0) += null" shouldNot compile
+        "face.facelets(0)(0) += null" shouldNot compile
+      }
+
+      it("can have assignment only on second dimension") {
+        "face.facelets(0) = null" shouldNot compile
+        "face.facelets(0)(0) = null" should compile
       }
     }
 
@@ -30,11 +44,11 @@ class FaceSpec extends UnitSpec {
         it("rotates the facelets") {
           face.rotate(Clockwise)
 
-          face.facelets should equal (
+          face.facelets should contain theSameElementsInOrderAs
             facelets(
               Seq((13, Yellow, East), (10, Yellow, East), ( 7, Yellow, East)),
               Seq((14, Yellow, East), (11, Yellow, East), ( 8, Yellow, East)),
-              Seq((15, Yellow, East), (12, Yellow, East), ( 9, Yellow, East))))
+              Seq((15, Yellow, East), (12, Yellow, East), ( 9, Yellow, East)))
         }
       }
 
@@ -42,11 +56,11 @@ class FaceSpec extends UnitSpec {
         it("rotates the facelets") {
           face.rotate(CounterClockwise)
 
-          face.facelets should equal (
+          face.facelets should contain theSameElementsInOrderAs
             facelets(
               Seq(( 9, Yellow, West), (12, Yellow, West), (15, Yellow, West)),
               Seq(( 8, Yellow, West), (11, Yellow, West), (14, Yellow, West)),
-              Seq(( 7, Yellow, West), (10, Yellow, West), (13, Yellow, West))))
+              Seq(( 7, Yellow, West), (10, Yellow, West), (13, Yellow, West)))
         }
       }
 
@@ -54,11 +68,11 @@ class FaceSpec extends UnitSpec {
         it("rotates the facelets") {
           face.rotate(Flipped)
 
-          face.facelets should equal (
+          face.facelets should contain theSameElementsInOrderAs
             facelets(
               Seq((15, Yellow, South), (14, Yellow, South), (13, Yellow, South)),
               Seq((12, Yellow, South), (11, Yellow, South), (10, Yellow, South)),
-              Seq(( 9, Yellow, South), ( 8, Yellow, South), ( 7, Yellow, South))))
+              Seq(( 9, Yellow, South), ( 8, Yellow, South), ( 7, Yellow, South)))
         }
       }
     }
@@ -113,11 +127,11 @@ class FaceSpec extends UnitSpec {
           it("sets a stripe") {
             face.stripes(North, 0) = srcFacelets
 
-            face.facelets should equal (
+            face.facelets should contain theSameElementsInOrderAs
               facelets(
                 Seq((20, Red   , East ), (21, Blue  , South), (22, Orange, West )),
                 Seq((10, Yellow, North), (11, Yellow, North), (12, Yellow, North)),
-                Seq((13, Yellow, North), (14, Yellow, North), (15, Yellow, North))))
+                Seq((13, Yellow, North), (14, Yellow, North), (15, Yellow, North)))
           }
         }
 
@@ -125,11 +139,11 @@ class FaceSpec extends UnitSpec {
           it("sets a stripe") {
             face.stripes(East, 0) = srcFacelets
 
-            face.facelets should equal (
+            face.facelets should contain theSameElementsInOrderAs
               facelets(
                 Seq(( 7, Yellow, North), ( 8, Yellow, North), (20, Red   , South)),
                 Seq((10, Yellow, North), (11, Yellow, North), (21, Blue  , West )),
-                Seq((13, Yellow, North), (14, Yellow, North), (22, Orange, North))))
+                Seq((13, Yellow, North), (14, Yellow, North), (22, Orange, North)))
           }
         }
 
@@ -137,11 +151,11 @@ class FaceSpec extends UnitSpec {
           it("sets a stripe") {
             face.stripes(South, 1) = srcFacelets
 
-            face.facelets should equal (
+            face.facelets should contain theSameElementsInOrderAs
               facelets(
                 Seq(( 7, Yellow, North), ( 8, Yellow, North), ( 9, Yellow, North)),
                 Seq((22, Orange, East ), (21, Blue  , North), (20, Red   , West )),
-                Seq((13, Yellow, North), (14, Yellow, North), (15, Yellow, North))))
+                Seq((13, Yellow, North), (14, Yellow, North), (15, Yellow, North)))
           }
         }
 
@@ -149,11 +163,11 @@ class FaceSpec extends UnitSpec {
           it("sets a stripe") {
             face.stripes(West, 2) = srcFacelets
 
-            face.facelets should equal (
+            face.facelets should contain theSameElementsInOrderAs
               facelets(
                 Seq(( 7, Yellow, North), ( 8, Yellow, North), (22, Orange, South)),
                 Seq((10, Yellow, North), (11, Yellow, North), (21, Blue  , East )),
-                Seq((13, Yellow, North), (14, Yellow, North), (20, Red   , North))))
+                Seq((13, Yellow, North), (14, Yellow, North), (20, Red   , North)))
           }
         }
       }
