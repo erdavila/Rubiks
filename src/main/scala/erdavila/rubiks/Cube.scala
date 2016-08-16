@@ -2,6 +2,7 @@ package erdavila.rubiks
 
 import erdavila.rubiks.Color._
 import erdavila.rubiks.FaceLabel._
+import erdavila.rubiks.Orientation._
 
 object Cube {
   def apply(size: Int): Cube = {
@@ -15,6 +16,28 @@ object Cube {
       L -> new Face(5 * faceletsPerFace, size, Orange))
     new Cube(faces)
   }
+
+  private val edges =
+    Seq(
+      ((F, North), (U, South)),
+      ((F, East ), (R, West )),
+      ((F, South), (D, North)),
+      ((F, West ), (L, East )),
+      ((U, East ), (R, North)),
+      ((R, East ), (B, West )),
+      ((R, South), (D, East )))
+    .flatMap {
+      case (adjacencyA, adjacencyB) =>
+        Seq(
+          adjacencyA -> adjacencyB,
+          adjacencyB -> adjacencyA)
+    }
+    .foldLeft(FaceLabel.values.map(_ -> Map.empty[Orientation, (FaceLabel, Orientation)]).toMap) {
+      case (edges, ((adjacentFaceLabel, adjacentFaceEdgeOrientation), adjacency)) =>
+        val faceEdges = edges(adjacentFaceLabel)
+        val updatedFaceEdges = faceEdges + (adjacentFaceEdgeOrientation -> adjacency)
+        edges + (adjacentFaceLabel -> updatedFaceEdges)
+    }
 }
 
 class Cube(facesProvider: (FaceLabel) => Face) {
@@ -33,4 +56,35 @@ class Cube(facesProvider: (FaceLabel) => Face) {
 
   def rotateFace(faceLabel: FaceLabel, rotation: Rotation): Unit =
     faces(faceLabel).rotate(rotation)
+
+  def rotateLayer(faceLabel: FaceLabel, offset: Int, rotation: Rotation): Unit = {
+    val faceEdges = Cube.edges(faceLabel)
+
+    val faceAdjacencies = Orientation.clockwiseValues
+      .map { orientation =>
+        val (adjacentFaceLabel, adjacentFaceEdgeOrientation) = faceEdges(orientation)
+        val adjacentFace = faces(adjacentFaceLabel)
+        orientation -> (adjacentFace, adjacentFaceEdgeOrientation)
+      }
+      .toMap
+
+    val stripes = Orientation.clockwiseValues
+      .map { orientation =>
+        val (adjacentFace, adjacentFaceEdgeOrientation) = faceAdjacencies(orientation)
+        orientation -> adjacentFace.stripes(adjacentFaceEdgeOrientation, offset)
+      }
+      .toMap
+
+    val rotatedStripes = stripes
+      .map {
+        case (orientation, stripe) =>
+          val newOrientation = orientation :+ rotation
+          newOrientation -> stripe
+      }
+
+    Orientation.clockwiseValues foreach { orientation =>
+      val (adjacentFace, adjacentFaceEdgeOrientation) = faceAdjacencies(orientation)
+      adjacentFace.stripes(adjacentFaceEdgeOrientation, offset) = rotatedStripes(orientation)
+    }
+  }
 }

@@ -1,10 +1,10 @@
 package erdavila.rubiks
 
 import erdavila.rubiks.Color._
-import erdavila.rubiks.Equalities.faceEq
+import erdavila.rubiks.Equalities.{cubeEq, faceEq}
 import erdavila.rubiks.FaceLabel._
-import erdavila.rubiks.Orientation.South
-import erdavila.rubiks.Rotation.Clockwise
+import erdavila.rubiks.Orientation._
+import erdavila.rubiks.Rotation._
 
 class MockableFace extends Face(0, 3, null)
 
@@ -85,6 +85,46 @@ class CubeSpec extends UnitSpec {
         cube.rotateFace(R, Clockwise)
 
         (rightFace.rotate _).verify(Clockwise)
+      }
+    }
+
+    describe(".rotateLayer()") {
+      describe("Clockwise") {
+        it("rotates Faces stripes") {
+          val cube = Cube(3)
+
+          cube.rotateLayer(FaceLabel.F, 0, Clockwise)
+
+          val expectedCube = Cube(3)
+          val stripeUToR = expectedCube.faces(U).stripes(South, 0)
+          val stripeRToD = expectedCube.faces(R).stripes(West , 0)
+          val stripeDToL = expectedCube.faces(D).stripes(North, 0)
+          val stripeLToU = expectedCube.faces(L).stripes(East , 0)
+          expectedCube.faces(U).stripes(South, 0) = stripeLToU
+          expectedCube.faces(R).stripes(West , 0) = stripeUToR
+          expectedCube.faces(D).stripes(North, 0) = stripeRToD
+          expectedCube.faces(L).stripes(East , 0) = stripeDToL
+          cube should equal (expectedCube)
+        }
+      }
+
+      describe("CounterClockwise") {
+        it("rotates Faces stripes") {
+          val cube = Cube(3)
+
+          cube.rotateLayer(FaceLabel.R, 1, CounterClockwise)
+
+          val expectedCube = Cube(3)
+          val stripeFToD = expectedCube.faces(F).stripes(East, 1)
+          val stripeUToF = expectedCube.faces(U).stripes(East, 1)
+          val stripeBToU = expectedCube.faces(B).stripes(West, 1)
+          val stripeDToB = expectedCube.faces(D).stripes(East, 1)
+          expectedCube.faces(F).stripes(East, 1) = stripeUToF
+          expectedCube.faces(U).stripes(East, 1) = stripeBToU
+          expectedCube.faces(B).stripes(West, 1) = stripeDToB
+          expectedCube.faces(D).stripes(East, 1) = stripeFToD
+          cube should equal (expectedCube)
+        }
       }
     }
   }

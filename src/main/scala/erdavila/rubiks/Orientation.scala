@@ -16,7 +16,7 @@ object Orientation {
   case object South extends Orientation
   case object West  extends Orientation
 
-  private val clockwiseValues = Array[Orientation](North, East, South, West)
+  val clockwiseValues = Array[Orientation](North, East, South, West)
 
   def clockwisely(index: Int) = clockwiseValues(Math.floorMod(index, 4))
 }
