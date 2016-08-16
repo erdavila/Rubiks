@@ -26,11 +26,11 @@ class Face(firstId: Int, val size: Int, color: Color) {
     }
   }
 
-  val facelets = Array.tabulate(size, size) {
+  val facelets: IndexedSeq[Array[Facelet]] = Array.tabulate(size, size) {
     case (row, column) =>
       val id = firstId + row * size + column
       Facelet(id, color)
-  }: IndexedSeq[Array[Facelet]]
+  }
 
   val stripes = new Stripes
 
