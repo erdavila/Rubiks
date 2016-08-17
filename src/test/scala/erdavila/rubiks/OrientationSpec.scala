@@ -1,5 +1,7 @@
 package erdavila.rubiks
 
+import erdavila.rubiks.Orientation._
+
 class OrientationObjectSpec extends UnitSpec {
   describe("Orientation") {
     describe(".clockwisely()") {

@@ -1,5 +1,7 @@
 package erdavila.rubiks
 
+import erdavila.rubiks.Orientation.North
+
 class Face(firstId: Int, val size: Int, color: Color) {
   class Stripes {
     def apply(fromEdge: Orientation, offset: Int = 0): Array[Facelet] = {

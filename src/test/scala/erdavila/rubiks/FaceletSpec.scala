@@ -1,6 +1,7 @@
 package erdavila.rubiks
 
 import erdavila.rubiks.Color.Yellow
+import erdavila.rubiks.Orientation.{North, East}
 
 class FaceletSpec extends UnitSpec {
   describe("Facelet") {

@@ -1,6 +1,7 @@
 package erdavila.rubiks
 
 import erdavila.rubiks.Color._
+import erdavila.rubiks.Orientation._
 
 class FaceSpec extends UnitSpec {
   type FaceletArgs = (Int, Color, Orientation)
