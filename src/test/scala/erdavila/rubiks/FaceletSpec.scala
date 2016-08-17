@@ -1,5 +1,7 @@
 package erdavila.rubiks
 
+import erdavila.rubiks.Color.Yellow
+
 class FaceletSpec extends UnitSpec {
   describe("Facelet") {
     describe(".rotated()") {
