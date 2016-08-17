@@ -1,6 +1,7 @@
 package erdavila.rubiks
 
 import erdavila.rubiks.Orientation.North
+import erdavila.rubiks.Rotation._
 
 class Face(firstId: Int, val size: Int, color: Color) {
   class Stripes {

@@ -1,6 +1,7 @@
 package erdavila.rubiks
 
 import erdavila.rubiks.FaceLabel._
+import erdavila.rubiks.Rotation.Clockwise
 
 class MockableFace extends Face(0, 3, null)
 

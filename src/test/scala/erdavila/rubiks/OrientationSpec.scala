@@ -1,6 +1,7 @@
 package erdavila.rubiks
 
 import erdavila.rubiks.Orientation._
+import erdavila.rubiks.Rotation._
 
 class OrientationObjectSpec extends UnitSpec {
   describe("Orientation") {

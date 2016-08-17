@@ -1,5 +1,7 @@
 package erdavila.rubiks
 
+import erdavila.rubiks.Rotation._
+
 class RotationObjectSpec extends UnitSpec {
   describe("Rotation") {
     describe(".byClockwiseAmount()") {
