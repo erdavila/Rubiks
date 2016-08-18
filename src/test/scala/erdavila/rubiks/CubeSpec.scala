@@ -1,10 +1,30 @@
 package erdavila.rubiks
 
-import erdavila.rubiks.Color.White
+import erdavila.rubiks.Color._
+import erdavila.rubiks.Equalities.faceEq
 import erdavila.rubiks.FaceLabel._
+import erdavila.rubiks.Orientation.South
 import erdavila.rubiks.Rotation.Clockwise
 
 class MockableFace extends Face(0, 3, null)
+
+class CubeObjectSpec extends UnitSpec {
+  describe("Cube companion object") {
+    describe(".apply()") {
+      it("creates a Cube with the specified size") {
+        val cube = Cube(3)
+
+        cube.size should equal (3)
+        cube.faces(F) should equal (new Face( 0, 3, Green))
+        cube.faces(U) should equal (new Face( 9, 3, White))
+        cube.faces(R) should equal (new Face(18, 3, Red))
+        cube.faces(B) should equal (new Face(27, 3, Blue))
+        cube.faces(D) should equal (new Face(36, 3, Yellow))
+        cube.faces(L) should equal (new Face(45, 3, Orange))
+      }
+    }
+  }
+}
 
 class CubeSpec extends UnitSpec {
   describe("Cube") {
