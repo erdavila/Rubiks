@@ -17,15 +17,20 @@ object Cube {
     new Cube(faces)
   }
 
-  private val edges =
+  val edges =
     Seq(
       ((F, North), (U, South)),
       ((F, East ), (R, West )),
       ((F, South), (D, North)),
       ((F, West ), (L, East )),
+      ((U, North), (B, North)),
       ((U, East ), (R, North)),
+      ((U, West ), (L, North)),
       ((R, East ), (B, West )),
-      ((R, South), (D, East )))
+      ((R, South), (D, East )),
+      ((B, East ), (L, West )),
+      ((B, South), (D, South)),
+      ((D, West ), (L, South)))
     .flatMap {
       case (adjacencyA, adjacencyB) =>
         Seq(

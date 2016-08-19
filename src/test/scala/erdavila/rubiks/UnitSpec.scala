@@ -5,6 +5,7 @@ import org.scalatest.BeforeAndAfterEach
 import org.scalatest.FunSpec
 import org.scalatest.Matchers
 import org.scalatest.OneInstancePerTest
+import org.scalatest.prop.TableDrivenPropertyChecks
 
 abstract class UnitSpec
   extends FunSpec
@@ -12,3 +13,4 @@ abstract class UnitSpec
   with BeforeAndAfterEach
   with Matchers
   with MockFactory
+  with TableDrivenPropertyChecks

@@ -23,6 +23,54 @@ class CubeObjectSpec extends UnitSpec {
         cube.faces(L) should equal (new Face(45, 3, Orange))
       }
     }
+
+    describe(".edges") {
+      it("has all orientations defined for every face label") {
+        val faceLabels = Table("faceLabel", FaceLabel.values: _*)
+
+        forAll(faceLabels) { fl =>
+          Cube.edges(fl).keySet should contain theSameElementsAs (Orientation.clockwiseValues)
+        }
+      }
+
+      it("is symmetric") {
+        val adjacenciesPairs =
+          for {
+            fl <- FaceLabel.values
+            or <- Orientation.clockwiseValues
+          } yield (fl, or)
+        val adjacencies = Table("adjacency", adjacenciesPairs: _*)
+
+        forAll(adjacencies) { adjacencyA =>
+          val (faceLabelA, orientationA) = adjacencyA
+          val adjacencyB = Cube.edges(faceLabelA)(orientationA)
+          val (faceLabelB, orientationB) = adjacencyB
+          Cube.edges(faceLabelB)(orientationB) should equal (adjacencyA)
+        }
+      }
+
+      it("defines the vertices") {
+        val faceLabels = Table("faceLabel", F, B)
+        val faceEdge = Table("face edge", Orientation.clockwiseValues: _*)
+
+        forAll(faceLabels) { faceLabel =>
+          val thisFaceAdjacencies = Cube.edges(faceLabel)
+
+          forAll(faceEdge) { thisFaceEdgeToA =>
+            val thisFaceEdgeToB = thisFaceEdgeToA :+ Clockwise
+
+            val (faceALabel, faceAEdgeToThis) = thisFaceAdjacencies(thisFaceEdgeToA)
+            val (faceBLabel, faceBEdgeToThis) = thisFaceAdjacencies(thisFaceEdgeToB)
+
+            val faceAEdgeToB = faceAEdgeToThis :+ CounterClockwise
+            val faceBEdgeToA = faceBEdgeToThis :+ Clockwise
+
+            Cube.edges(faceALabel)(faceAEdgeToB) should equal (faceBLabel, faceBEdgeToA)
+            Cube.edges(faceBLabel)(faceBEdgeToA) should equal (faceALabel, faceAEdgeToB)
+          }
+        }
+      }
+    }
   }
 }
 
